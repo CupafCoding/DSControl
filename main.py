@@ -7,7 +7,7 @@ intents = discord.Intents.default()
 
 client = commands.Bot(command_prefix='$', intents=discord.Intents.all())
 
-TOKEN = "Get the fuck out"
+TOKEN = "None"
 
 limit_pixels = 201
 
@@ -15,13 +15,16 @@ def move(direction, px : int, speed : float):
     x = pag.position()[0]
     y = pag.position()[1]
 
+    if (x < 300 and y < 800):
+        pag.moveTo(1000, 1000)
+
     if (direction == "left"):
         pag.moveTo(x - px, y, speed)
     elif (direction == "right"):
         pag.moveTo(x + px, y, speed)
     elif (direction == "top"):
         pag.moveTo(x, y - px, speed)
-    elif (direction == "bottom"):
+    elif (direction == "down"):
         pag.moveTo(x, y + px, speed)
 
 @client.event
@@ -35,7 +38,7 @@ async def left(ctx, px : int and float):
 
         move("left", px, 0.5)
     else:
-        await ctx.send("Max of pixels - 100")
+        await ctx.send(f"Max of pixels - {limit_pixels}")
 
 @client.command()
 async def right(ctx, px : int and float):
@@ -44,7 +47,7 @@ async def right(ctx, px : int and float):
 
         move("right", px, 0.5)
     else:
-        await ctx.send("Max of pixels - 100")
+        await ctx.send(f"Max of pixels - {limit_pixels}")
 
 @client.command()
 async def top(ctx, px : int and float):
@@ -53,16 +56,16 @@ async def top(ctx, px : int and float):
 
         move("top", px, 0.5)
     else:
-        await ctx.send("Max of pixels - 100")
+        await ctx.send(f"Max of pixels - {limit_pixels}")
 
 @client.command()
-async def bottom(ctx, px : int and float):
+async def down(ctx, px : int and float):
     if (px < limit_pixels):
-        await ctx.send(f"Cursor move to bottom on {px} pixels")
+        await ctx.send(f"Cursor move to down on {px} pixels")
 
-        move("bottom", px, 0.5)
+        move("down", px, 0.5)
     else:
-        await ctx.send("Max of pixels - 100")
+        await ctx.send(f"Max of pixels - {limit_pixels}")
 
 @client.command()
 async def click(ctx):
